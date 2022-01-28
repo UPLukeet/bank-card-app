@@ -12,28 +12,37 @@ export const BankCard = ({
 }: CardDetails) => {
   return (
     <div
-      className={`w-full rounded-sm p-unit-2 ${
+      className={`w-full rounded-sm p-unit-4 pt-unit-3 my-unit-2 ${
         type === "visa" ? "bg-visa-green" : "bg-mastercard-purple"
       }`}
     >
-      <div className="flex">
+      <div className={`flex ${type === "masterCard" && "text-white"}`}>
         <img src={type === "visa" ? visaLogo : mastercardLogo} />
         <div className="flex ml-auto">
           <div className="flex flex-col m-unit-1">
-            <p>CVC</p>
-            <p>{cvc}</p>
+            <p className="text-xs ml-auto font-medium">CVC</p>
+            <p className="text-white font-bold text-sm">{cvc}</p>
           </div>
           <div className="flex flex-col m-unit-1">
-            <p>Expires</p>
-            <p>{expiry}</p>
+            <p className="text-xs ml-auto font-medium">Expires</p>
+            <p className="text-white font-bold text-sm">{expiry}</p>
           </div>
         </div>
       </div>
-      <div>
-        <p>{name}</p>
-        <div className="flex w-full">
-          <p>{cardNumber}</p>
-          <img className="ml-auto" src={editIcon} />
+      <div className="mt-unit-8">
+        <p className="text-white text-sm font-bold">{name}</p>
+        <div className="flex w-full mt-unit-1">
+          <p
+            className={`text-sm font-semibold word-spacing-lg ${
+              type === "masterCard" && "text-white"
+            }`}
+          >
+            {cardNumber
+              .toString()
+              .replace(/(.{4})/g, "$1 ")
+              .trim()}
+          </p>
+          <img className="ml-auto cursor-pointer" src={editIcon} />
         </div>
       </div>
     </div>
