@@ -42,10 +42,7 @@ export const BankCard = ({
               type === "masterCard" && "text-white"
             }`}
           >
-            {cardNumber
-              .toString()
-              .replace(/(.{4})/g, "$1 ")
-              .trim()}
+            {cardNumber.replace(/(.{4})/g, "$1 ").trim()}
           </p>
           {onEditClick && (
             <img

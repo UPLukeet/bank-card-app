@@ -5,10 +5,10 @@ import { PopupModal } from "../../components/PopupModal"
 import { Routes } from "../../Routes"
 
 export const AddCardPage = () => {
-  const [name, setName] = useState<string>()
-  const [cardNumber, setCardNumber] = useState<string>()
-  const [expiry, setExpiry] = useState<string>()
-  const [cvc, setCvc] = useState<string>()
+  const [name, setName] = useState("")
+  const [cardNumber, setCardNumber] = useState("")
+  const [expiry, setExpiry] = useState("")
+  const [cvc, setCvc] = useState("")
 
   const navigate = useNavigate()
 
@@ -18,7 +18,7 @@ export const AddCardPage = () => {
 
   return (
     <PopupModal heading="Add your card details" onCloseClick={closePopup}>
-      <>
+      <div className="flex flex-col h-full">
         <InputField
           label="Name on card"
           value={name}
@@ -39,7 +39,8 @@ export const AddCardPage = () => {
           value={cvc}
           onChange={(value) => setCvc(value)}
         />
-      </>
+        <button className="btn mt-auto mb-unit-5">Confirm</button>
+      </div>
     </PopupModal>
   )
 }

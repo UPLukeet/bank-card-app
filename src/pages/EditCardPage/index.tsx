@@ -7,10 +7,10 @@ import { Routes } from "../../Routes"
 import { testCardData } from "../LandingPage/testCardData"
 
 export const EditCardPage = () => {
-  const [name, setName] = useState<string>()
-  const [cardNumber, setCardNumber] = useState<string | number>()
-  const [expiry, setExpiry] = useState<string>()
-  const [cvc, setCvc] = useState<string | number>()
+  const [name, setName] = useState("")
+  const [cardNumber, setCardNumber] = useState("")
+  const [expiry, setExpiry] = useState("")
+  const [cvc, setCvc] = useState("")
 
   const { cardIndex } = useParams()
 
@@ -33,7 +33,7 @@ export const EditCardPage = () => {
 
   return (
     <PopupModal heading="Add your card details" onCloseClick={closePopup}>
-      <>
+      <div className="flex flex-col h-full">
         {dummyData && (
           <BankCard
             name={dummyData.name}
@@ -63,7 +63,8 @@ export const EditCardPage = () => {
           value={cvc}
           onChange={(value) => setCvc(value)}
         />
-      </>
+        <button className="btn mt-auto mb-unit-5">Confirm</button>
+      </div>
     </PopupModal>
   )
 }

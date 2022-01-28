@@ -16,7 +16,7 @@ export const InputField = ({
   type,
 }: InputFieldProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full my-unit-2">
       <TextField
         onChange={(e) => onChange(e.target.value)}
         value={value}
