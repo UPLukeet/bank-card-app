@@ -11,13 +11,14 @@ import { Routes } from "./Routes"
 function App() {
   return (
     <div className="h-full">
-      <LandingPage />
       <Router>
-        <Route path={Routes.ADD_CARD} element={<AddCardPage />} />
-        <Route
-          path={`${Routes.EDIT_CARD}/:cardIndex`}
-          element={<EditCardPage />}
-        />
+        <Route path={Routes.LANDING_PAGE} element={<LandingPage />}>
+          <Route path={Routes.ADD_CARD} element={<AddCardPage />} />
+          <Route
+            path={`${Routes.EDIT_CARD}/:cardIndex`}
+            element={<EditCardPage />}
+          />
+        </Route>
       </Router>
     </div>
   )

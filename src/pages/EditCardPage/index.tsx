@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { BankCard } from "../../components/BankCard"
 import { InputField } from "../../components/InputField"
 import { PopupModal } from "../../components/PopupModal"
@@ -8,9 +8,11 @@ import { testCardData } from "../LandingPage/testCardData"
 
 export const EditCardPage = () => {
   const [name, setName] = useState<string>()
-  const [cardNumber, setCardNumber] = useState<string>()
+  const [cardNumber, setCardNumber] = useState<string | number>()
   const [expiry, setExpiry] = useState<string>()
-  const [cvc, setCvc] = useState<string>()
+  const [cvc, setCvc] = useState<string | number>()
+
+  const { cardIndex } = useParams()
 
   const navigate = useNavigate()
 
@@ -18,18 +20,29 @@ export const EditCardPage = () => {
     navigate(Routes.LANDING_PAGE)
   }
 
-  const dummyData = testCardData[0]
+  const dummyData = cardIndex && testCardData[parseInt(cardIndex)]
+
+  useEffect(() => {
+    if (dummyData) {
+      setName(dummyData.name)
+      setCardNumber(dummyData.cardNumber)
+      setExpiry(dummyData.expiry)
+      setCvc(dummyData.cvc)
+    }
+  }, [dummyData])
 
   return (
     <PopupModal heading="Add your card details" onCloseClick={closePopup}>
       <>
-        <BankCard
-          name={dummyData.name}
-          type={dummyData.type}
-          cvc={dummyData.cvc}
-          cardNumber={dummyData.cardNumber}
-          expiry={dummyData.expiry}
-        />
+        {dummyData && (
+          <BankCard
+            name={dummyData.name}
+            type={dummyData.type}
+            cvc={dummyData.cvc}
+            cardNumber={dummyData.cardNumber}
+            expiry={dummyData.expiry}
+          />
+        )}
         <InputField
           label="Name on card"
           value={name}
