@@ -9,6 +9,7 @@ export const LandingPage = () => {
       <div className="my-unit-5">
         {testCardData?.map(({ name, type, cvc, cardNumber, expiry }) => (
           <BankCard
+            key={cardNumber}
             name={name}
             type={type}
             cvc={cvc}
