@@ -4,8 +4,13 @@ import closeIcon from "../assets/icons/close-icon.svg"
 interface PopupModalProps {
   onCloseClick: () => void
   children: ReactChild
+  heading: string
 }
-export const PopupModal = ({ onCloseClick, children }: PopupModalProps) => {
+export const PopupModal = ({
+  onCloseClick,
+  children,
+  heading,
+}: PopupModalProps) => {
   return (
     <>
       <div
@@ -20,7 +25,10 @@ export const PopupModal = ({ onCloseClick, children }: PopupModalProps) => {
             src={closeIcon}
           />
         </div>
-        {children}
+        <div className="px-unit-4">
+          <h1 className="heading">{heading}</h1>
+          {children}
+        </div>
       </div>
     </>
   )

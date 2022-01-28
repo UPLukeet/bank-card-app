@@ -4,9 +4,9 @@ import successIcon from "../assets/icons/form-success.svg"
 
 interface InputFieldProps {
   label: string
-  value: string
+  value: string | number | undefined
   onChange: (value: string) => void
-  type: "success" | "error" | "plain"
+  type?: "success" | "error"
 }
 
 export const InputField = ({

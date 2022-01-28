@@ -15,7 +15,7 @@ body {
 }
 
 .heading {
-  @apply text-purple-60 font-bold text-xl;
+  @apply font-bold text-xl;
 }
 
 .text-body {
