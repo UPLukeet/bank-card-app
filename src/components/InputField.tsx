@@ -1,4 +1,5 @@
 import { InputAdornment, TextField } from "@mui/material"
+import { useEffect } from "react"
 import errorIcon from "../assets/icons/form-error.svg"
 import successIcon from "../assets/icons/form-success.svg"
 
@@ -7,6 +8,7 @@ interface InputFieldProps {
   value: string | number | undefined
   onChange: (value: string) => void
   type?: "success" | "error"
+  isError?: (error: boolean) => void
 }
 
 export const InputField = ({
@@ -14,11 +16,19 @@ export const InputField = ({
   value,
   onChange,
   type,
+  isError,
 }: InputFieldProps) => {
+  const updateTextField = (e: string) => {
+    onChange(e)
+  }
+  useEffect(() => {
+    isError && isError(type === "error" || type === undefined)
+  }, [isError, type])
+
   return (
     <div className="w-full my-unit-2">
       <TextField
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => updateTextField(e.target.value)}
         value={value}
         label={label}
         variant="standard"
