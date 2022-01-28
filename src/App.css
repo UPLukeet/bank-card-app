@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.btn {
+  @apply bg-purple-60 hover:bg-purple-90 text-white rounded-lg text-md w-full p-unit-3;
+}
+
+.heading {
+  @apply text-purple-60 font-bold text-xl;
+}
+
+.text-body {
+  @apply text-grey-20 text-sm;
+}
