@@ -3,13 +3,18 @@ import visaLogo from "../assets/icons/visa-logo.svg"
 import mastercardLogo from "../assets/icons/mastercard-logo.svg"
 import editIcon from "../assets/icons/edit-icon.svg"
 
+type BankCardProps = CardDetails & {
+  onEditClick?: () => void
+}
+
 export const BankCard = ({
   type,
   cvc,
   expiry,
   name,
   cardNumber,
-}: CardDetails) => {
+  onEditClick,
+}: BankCardProps) => {
   return (
     <div
       className={`w-full rounded-sm p-unit-4 pt-unit-3 my-unit-2 ${
@@ -42,7 +47,13 @@ export const BankCard = ({
               .replace(/(.{4})/g, "$1 ")
               .trim()}
           </p>
-          <img className="ml-auto cursor-pointer" src={editIcon} />
+          {onEditClick && (
+            <img
+              onClick={() => onEditClick()}
+              className="ml-auto cursor-pointer"
+              src={editIcon}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -10,12 +10,16 @@ export const LandingPage = () => {
     navigate(Routes.ADD_CARD)
   }
 
+  const goToEditCard = (idx: number) => {
+    navigate(`${Routes.EDIT_CARD}/${idx}`)
+  }
+
   return (
     <div className="flex flex-col px-unit-4 py-unit-6 h-full">
       <h1 className="heading text-purple-60">Your cards</h1>
       <p className="text-body">Add, edit or delete your card anytime.</p>
       <div className="my-unit-5">
-        {testCardData?.map(({ name, type, cvc, cardNumber, expiry }) => (
+        {testCardData?.map(({ name, type, cvc, cardNumber, expiry }, idx) => (
           <BankCard
             key={cardNumber}
             name={name}
@@ -23,6 +27,7 @@ export const LandingPage = () => {
             cvc={cvc}
             cardNumber={cardNumber}
             expiry={expiry}
+            onEditClick={() => goToEditCard(idx)}
           />
         ))}
       </div>
