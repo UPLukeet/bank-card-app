@@ -15,9 +15,9 @@ export const PopupModal = ({
     <>
       <div
         onClick={onCloseClick}
-        className="absolute top-0 h-full w-full z-100 bg-grey-90 opacity-80 cursor-pointer"
+        className="fixed top-0 h-full w-full z-100 bg-grey-90 opacity-80 cursor-pointer"
       />
-      <div className="flex flex-col absolute z-150 bottom-0 h-5/6 w-full bg-white rounded-t-md overflow-hidden">
+      <div className="flex flex-col fixed z-150 bottom-0 h-5/6 w-full bg-white rounded-t-md overflow-hidden">
         <div className="flex m-unit-4">
           <img
             onClick={onCloseClick}

@@ -1,8 +1,11 @@
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { InputField } from "../../components/InputField"
 import { PopupModal } from "../../components/PopupModal"
+import { useCardContext } from "../../context/CardContext"
 import { Routes } from "../../Routes"
+import { CardDetails } from "../../types/cardDetails"
 import { expiryMatch, lettersMatch, numberMatch } from "../../utils/index"
 
 export const AddCardPage = () => {
@@ -10,16 +13,33 @@ export const AddCardPage = () => {
   const [cardNumber, setCardNumber] = useState("")
   const [expiry, setExpiry] = useState("")
   const [cvc, setCvc] = useState("")
+  const [cardType, setCardType] = useState<"masterCard" | "visa" | undefined>(
+    undefined
+  )
   const [isNameError, setIsNameError] = useState(false)
   const [isCardError, setIsCardError] = useState(false)
   const [isExpiryError, setIsExpiryError] = useState(false)
   const [isCvcError, setIsCvcError] = useState(false)
+  const { addCard } = useCardContext()
 
   const isError = isNameError || isCardError || isExpiryError || isCvcError
 
   const navigate = useNavigate()
 
   const closePopup = () => {
+    navigate(Routes.LANDING_PAGE)
+  }
+
+  const card: CardDetails = {
+    name,
+    cardNumber,
+    expiry,
+    cvc,
+    type: cardType as "masterCard" | "visa",
+  }
+
+  const uploadCard = () => {
+    addCard(card)
     navigate(Routes.LANDING_PAGE)
   }
 
@@ -78,7 +98,23 @@ export const AddCardPage = () => {
               : undefined
           }
         />
-        <button disabled={isError} className="btn mt-auto mb-unit-5">
+        <FormControl variant="standard" className="my-unit-2">
+          <InputLabel>Card Type</InputLabel>
+          <Select
+            value={cardType}
+            onChange={(e) =>
+              setCardType(e.target.value as "masterCard" | "visa")
+            }
+          >
+            <MenuItem value={"visa"}>Visa</MenuItem>
+            <MenuItem value={"masterCard"}>Master card</MenuItem>
+          </Select>
+        </FormControl>
+        <button
+          onClick={uploadCard}
+          disabled={isError || !cardType}
+          className="btn mt-auto mb-unit-5"
+        >
           Confirm
         </button>
       </div>

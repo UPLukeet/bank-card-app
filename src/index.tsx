@@ -4,12 +4,15 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
+import { CardContextProvider } from "./context/CardContext"
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <CardContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CardContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 )

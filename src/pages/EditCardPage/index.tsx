@@ -3,9 +3,10 @@ import { useNavigate, useParams } from "react-router-dom"
 import { BankCard } from "../../components/BankCard"
 import { InputField } from "../../components/InputField"
 import { PopupModal } from "../../components/PopupModal"
+import { useCardContext } from "../../context/CardContext"
 import { Routes } from "../../Routes"
+import { CardDetails } from "../../types/cardDetails"
 import { expiryMatch, lettersMatch, numberMatch } from "../../utils"
-import { testCardData } from "../LandingPage/testCardData"
 
 export const EditCardPage = () => {
   const [name, setName] = useState("")
@@ -16,6 +17,7 @@ export const EditCardPage = () => {
   const [isCardError, setIsCardError] = useState(false)
   const [isExpiryError, setIsExpiryError] = useState(false)
   const [isCvcError, setIsCvcError] = useState(false)
+  const { savedCards, updateCard, deleteCard } = useCardContext()
 
   const isError = isNameError || isCardError || isExpiryError || isCvcError
 
@@ -27,27 +29,51 @@ export const EditCardPage = () => {
     navigate(Routes.LANDING_PAGE)
   }
 
-  const dummyData = cardIndex && testCardData[parseInt(cardIndex)]
+  const selectedCard = cardIndex
+    ? (savedCards[parseInt(cardIndex)] as CardDetails)
+    : undefined
 
   useEffect(() => {
-    if (dummyData) {
-      setName(dummyData.name)
-      setCardNumber(dummyData.cardNumber)
-      setExpiry(dummyData.expiry)
-      setCvc(dummyData.cvc)
+    if (selectedCard) {
+      setName(selectedCard.name)
+      setCardNumber(selectedCard.cardNumber)
+      setExpiry(selectedCard.expiry)
+      setCvc(selectedCard.cvc)
     }
-  }, [dummyData])
+  }, [selectedCard])
+
+  const card: CardDetails = {
+    name,
+    cardNumber,
+    expiry,
+    cvc,
+    type: selectedCard?.type as "masterCard" | "visa",
+  }
+
+  const editCard = () => {
+    if (cardIndex) {
+      updateCard(parseInt(cardIndex), card)
+      navigate(Routes.LANDING_PAGE)
+    }
+  }
+
+  const removeCard = () => {
+    if (cardIndex) {
+      deleteCard(parseInt(cardIndex))
+      navigate(Routes.LANDING_PAGE)
+    }
+  }
 
   return (
     <PopupModal heading="Add your card details" onCloseClick={closePopup}>
       <div className="flex flex-col h-full">
-        {dummyData && (
+        {selectedCard && (
           <BankCard
-            name={dummyData.name}
-            type={dummyData.type}
-            cvc={dummyData.cvc}
-            cardNumber={dummyData.cardNumber}
-            expiry={dummyData.expiry}
+            name={selectedCard.name}
+            type={selectedCard.type}
+            cvc={selectedCard.cvc}
+            cardNumber={selectedCard.cardNumber}
+            expiry={selectedCard.expiry}
           />
         )}
         <InputField
@@ -102,7 +128,16 @@ export const EditCardPage = () => {
               : undefined
           }
         />
-        <button className="btn mt-auto mb-unit-5">Confirm</button>
+        <button
+          disabled={isError}
+          onClick={editCard}
+          className="btn mt-auto mb-unit-1"
+        >
+          Confirm
+        </button>
+        <button onClick={removeCard} className="text-grey-20 mt-auto mb-unit-4">
+          Delete card
+        </button>
       </div>
     </PopupModal>
   )
