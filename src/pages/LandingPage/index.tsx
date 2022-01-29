@@ -1,10 +1,11 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import { BankCard } from "../../components/BankCard"
+import { useCardContext } from "../../context/CardContext"
 import { Routes } from "../../Routes"
-import { testCardData } from "./testCardData"
 
 export const LandingPage = () => {
   const navigate = useNavigate()
+  const { savedCards } = useCardContext()
 
   const goToAddCard = () => {
     navigate(`/${Routes.ADD_CARD}`)
@@ -20,17 +21,23 @@ export const LandingPage = () => {
         <h1 className="heading text-purple-60">Your cards</h1>
         <p className="text-body">Add, edit or delete your card anytime.</p>
         <div className="my-unit-5">
-          {testCardData?.map(({ name, type, cvc, cardNumber, expiry }, idx) => (
-            <BankCard
-              key={cardNumber}
-              name={name}
-              type={type}
-              cvc={cvc}
-              cardNumber={cardNumber}
-              expiry={expiry}
-              onEditClick={() => goToEditCard(idx)}
-            />
-          ))}
+          {savedCards.length > 0 ? (
+            savedCards?.map(({ name, type, cvc, cardNumber, expiry }, idx) => (
+              <BankCard
+                key={cardNumber}
+                name={name}
+                type={type}
+                cvc={cvc}
+                cardNumber={cardNumber}
+                expiry={expiry}
+                onEditClick={() => goToEditCard(idx)}
+              />
+            ))
+          ) : (
+            <p className="text-grey-70 text-md text-center mt-unit-4 font-bold">
+              No cards to show
+            </p>
+          )}
         </div>
         <button onClick={goToAddCard} className="btn mt-auto mb-unit-2">
           Add your card

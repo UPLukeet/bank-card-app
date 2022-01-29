@@ -2,7 +2,9 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { InputField } from "../../components/InputField"
 import { PopupModal } from "../../components/PopupModal"
+import { useCardContext } from "../../context/CardContext"
 import { Routes } from "../../Routes"
+import { CardDetails } from "../../types/cardDetails"
 import { expiryMatch, lettersMatch, numberMatch } from "../../utils/index"
 
 export const AddCardPage = () => {
@@ -14,12 +16,26 @@ export const AddCardPage = () => {
   const [isCardError, setIsCardError] = useState(false)
   const [isExpiryError, setIsExpiryError] = useState(false)
   const [isCvcError, setIsCvcError] = useState(false)
+  const { addCard } = useCardContext()
 
   const isError = isNameError || isCardError || isExpiryError || isCvcError
 
   const navigate = useNavigate()
 
   const closePopup = () => {
+    navigate(Routes.LANDING_PAGE)
+  }
+
+  const card: CardDetails = {
+    name,
+    cardNumber,
+    expiry,
+    cvc,
+    type: "masterCard",
+  }
+
+  const uploadCard = () => {
+    addCard(card)
     navigate(Routes.LANDING_PAGE)
   }
 
@@ -78,7 +94,11 @@ export const AddCardPage = () => {
               : undefined
           }
         />
-        <button disabled={isError} className="btn mt-auto mb-unit-5">
+        <button
+          onClick={uploadCard}
+          disabled={isError}
+          className="btn mt-auto mb-unit-5"
+        >
           Confirm
         </button>
       </div>
