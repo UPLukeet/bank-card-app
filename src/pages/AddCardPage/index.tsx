@@ -1,3 +1,4 @@
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { InputField } from "../../components/InputField"
@@ -12,6 +13,9 @@ export const AddCardPage = () => {
   const [cardNumber, setCardNumber] = useState("")
   const [expiry, setExpiry] = useState("")
   const [cvc, setCvc] = useState("")
+  const [cardType, setCardType] = useState<"masterCard" | "visa" | undefined>(
+    undefined
+  )
   const [isNameError, setIsNameError] = useState(false)
   const [isCardError, setIsCardError] = useState(false)
   const [isExpiryError, setIsExpiryError] = useState(false)
@@ -31,7 +35,7 @@ export const AddCardPage = () => {
     cardNumber,
     expiry,
     cvc,
-    type: "masterCard",
+    type: cardType as "masterCard" | "visa",
   }
 
   const uploadCard = () => {
@@ -94,9 +98,21 @@ export const AddCardPage = () => {
               : undefined
           }
         />
+        <FormControl variant="standard" className="my-unit-2">
+          <InputLabel>Card Type</InputLabel>
+          <Select
+            value={cardType}
+            onChange={(e) =>
+              setCardType(e.target.value as "masterCard" | "visa")
+            }
+          >
+            <MenuItem value={"visa"}>Visa</MenuItem>
+            <MenuItem value={"masterCard"}>Master card</MenuItem>
+          </Select>
+        </FormControl>
         <button
           onClick={uploadCard}
-          disabled={isError}
+          disabled={isError || !cardType}
           className="btn mt-auto mb-unit-5"
         >
           Confirm

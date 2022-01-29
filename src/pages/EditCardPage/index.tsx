@@ -29,7 +29,9 @@ export const EditCardPage = () => {
     navigate(Routes.LANDING_PAGE)
   }
 
-  const selectedCard = cardIndex && savedCards[parseInt(cardIndex)]
+  const selectedCard = cardIndex
+    ? (savedCards[parseInt(cardIndex)] as CardDetails)
+    : undefined
 
   useEffect(() => {
     if (selectedCard) {
@@ -45,7 +47,7 @@ export const EditCardPage = () => {
     cardNumber,
     expiry,
     cvc,
-    type: "masterCard",
+    type: selectedCard?.type as "masterCard" | "visa",
   }
 
   const editCard = () => {

@@ -39,9 +39,11 @@ export const LandingPage = () => {
             </p>
           )}
         </div>
-        <button onClick={goToAddCard} className="btn mt-auto mb-unit-2">
-          Add your card
-        </button>
+        <div className="mt-auto">
+          <button onClick={goToAddCard} className="btn mt-auto mb-unit-2">
+            Add your card
+          </button>
+        </div>
       </div>
       <Outlet />
     </>
